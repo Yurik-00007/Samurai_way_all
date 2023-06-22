@@ -1,0 +1,14 @@
+.item{
+    color:greenyellow;
+}
+.item img{
+    width: 50px;
+    border-radius: 50%;
+}
+.postsBlock{
+    padding: 10px;
+}
+
+.posts{
+margin-top: 10px;
+}
