@@ -2,7 +2,7 @@
   "name": "samurai-way",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Yurik-00007.github.io/Samurai_way",
+  "homepage": "https://Yurik-00007.github.io/Samurai_way_all",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.0",
     "@testing-library/jest-dom": "5.14.1",

@@ -1,7 +1,7 @@
 import React, {lazy, Suspense} from 'react';
 import './App.css';
 import {Navbar} from "./components/Navbar/Navbar";
-import {BrowserRouter, Route, RouteComponentProps, withRouter} from "react-router-dom";
+import {BrowserRouter, HashRouter, Route, RouteComponentProps, withRouter} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
@@ -113,11 +113,18 @@ const AppContainer = withRouter(connect(mapStateToProps, {initializeApp: initial
 
 const SamuraiJSApp = (props: any) => {
     return (
-        <BrowserRouter>
+        <HashRouter  >
+            <Provider store={store}>
+                <AppContainer/>
+            </Provider>
+        </HashRouter>
+/*
+        <BrowserRouter  basename={ process.env.PUBLIC_URL}>
             <Provider store={store}>
                 <AppContainer/>
             </Provider>
         </BrowserRouter>
+*/
 
     )
 }
