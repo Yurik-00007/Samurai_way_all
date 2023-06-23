@@ -68,7 +68,7 @@ let initialState: InitialStateType = {
 }
 
 
-export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionTypes) => {
+export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionTypes):InitialStateType => {
 
     switch (action.type) {
         case 'ADD-POST':
@@ -85,7 +85,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
         case "DELETE-POST":
             return {...state, posts: state.posts.filter(p => p.id !== action.payload.postId)}
         case "SAVE-PHOTO":
-            return {...state, userProfile: {...state.userProfile, photos:{...state.userProfile?.photos,large:action.payload.photo} }}
+            return {...state, userProfile: {...state.userProfile, photos:action.payload.photos} as ProfileType}
         default:
             return state;
     }
@@ -129,11 +129,11 @@ export const deletePostAC = (postId: number) => {
         }
     } as const
 }
-export const savePhotoSuccessAC = (photo: File) => {
+export const savePhotoSuccessAC = (photos: PhotosType) => {
     return {
         type: 'SAVE-PHOTO',
         payload: {
-            photo
+            photos
         }
     } as const
 }
