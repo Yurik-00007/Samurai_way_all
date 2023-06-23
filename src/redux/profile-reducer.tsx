@@ -22,8 +22,8 @@ export type ContactsType = {
 }
 
 export type PhotosType = {
-    small: (string)
-    large: (string)
+    small: string
+    large: string
 }
 
 export  type UserProfileType = {
@@ -39,7 +39,7 @@ export  type ProfileType = UserProfileType | null
 export  type StatusType = string
 
 
-export type _InitialStateType = typeof initialState
+//export type _InitialStateType = typeof initialState
 export type InitialStateType = {
     posts: PostsType[]
     userProfile: UserProfileType | null
@@ -47,15 +47,13 @@ export type InitialStateType = {
 
 }
 
-const ADD_POST = 'ADD-POST'
-const SET_USER_PROFILE = 'SET-USER-PROFILE'
-
 export type ProfileActionTypes =
     | AddPostACType
     | AddMessageACType
     | SetUserProfileACType
     | SetStatusACType
     | DeletePostACType
+    | SavePhotoType
 
 
 let initialState: InitialStateType = {
@@ -67,27 +65,27 @@ let initialState: InitialStateType = {
     ],
     userProfile: null,
     status: ''
-
 }
 
 
 export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionTypes) => {
 
     switch (action.type) {
-        case ADD_POST:
+        case 'ADD-POST':
             let newPost = {
                 id: state.posts.length + 1,
-                message: action.newPostText,
+                message: action.payload.newPostText,
                 likesCount: 0,
             }
             return {...state, posts: [newPost, ...state.posts]};
-        case  SET_USER_PROFILE:
-            return {...state, userProfile: action.userProfile};
+        case  'SET-USER-PROFILE':
+            return {...state, userProfile: action.payload.userProfile};
         case "SET-STATUS":
             return {...state, status: action.payload.status}
         case "DELETE-POST":
-            return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
-
+            return {...state, posts: state.posts.filter(p => p.id !== action.payload.postId)}
+        case "SAVE-PHOTO":
+            return {...state, userProfile: {...state.userProfile, photos:{...state.userProfile?.photos,large:action.payload.photo} }}
         default:
             return state;
     }
@@ -98,17 +96,21 @@ export type AddPostACType = ReturnType<typeof addPostActionCreater>
 export type SetUserProfileACType = ReturnType<typeof setUserProfileAC>
 export type SetStatusACType = ReturnType<typeof setStatus>
 export type DeletePostACType = ReturnType<typeof deletePostAC>
+export type SavePhotoType = ReturnType<typeof savePhotoSuccessAC>
 //AC
 export const addPostActionCreater = (newPostText: string) => {
     return {
-        type: ADD_POST,
-        newPostText
-    } as const
+        type: 'ADD-POST',
+        payload: {
+            newPostText
+    } }as const
 }
 
 export const setUserProfileAC = (userProfile: UserProfileType) => ({
-    type: SET_USER_PROFILE,
-    userProfile
+    type: 'SET-USER-PROFILE',
+    payload: {
+        userProfile
+    }
 } as const)
 
 export const setStatus = (newStatus: string) =>
@@ -122,7 +124,17 @@ export const setStatus = (newStatus: string) =>
 export const deletePostAC = (postId: number) => {
     return {
         type: 'DELETE-POST',
-        postId
+        payload: {
+            postId
+        }
+    } as const
+}
+export const savePhotoSuccessAC = (photo: File) => {
+    return {
+        type: 'SAVE-PHOTO',
+        payload: {
+            photo
+        }
     } as const
 }
 
@@ -166,4 +178,11 @@ export const updateStatusTC = (newStatus: string) => (dispatch: Dispatch) => {
         });
 }
 */
+
+export const savePhotoTC = (photo: File): AppThunk => async dispatch => {
+    const res = await profileAPI.savePhoto(photo)
+        //debugger
+    if (res.data.resultCode === 0)
+        dispatch(savePhotoSuccessAC(res.data.data.photos))
+}
 

@@ -8,9 +8,10 @@ export type ProfilePageType = {
     profile: ProfileType
     status: StatusType
     updateUserStatus: (newStatus: string) => void
-
-
+    isOwner:boolean
+    savePhoto:(photo:File)=>void
 }
+
 export const Profile = (props: ProfilePageType) => {
     return <div>
         <ProfileInfo {...props} />

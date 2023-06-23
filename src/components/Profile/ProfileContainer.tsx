@@ -3,7 +3,7 @@ import {Profile} from "./Profile";
 import {connect} from "react-redux";
 import {
     getStatusTC,
-    getUserProfileTC,
+    getUserProfileTC, savePhotoTC,
     updateStatusTC,
     UserProfileType
 } from "../../redux/profile-reducer";
@@ -16,7 +16,7 @@ import {getStatusData, getUserIdData, getUserProfileData} from "../../redux/prof
 
 class ProfileContainer extends React.Component<OwnProps> {
 
-    componentDidMount() {
+    refreshProfile() {
         let userId: number | null = +this.props.match.params.userId
         if (!userId) {
             userId = this.props.userId
@@ -26,15 +26,27 @@ class ProfileContainer extends React.Component<OwnProps> {
         }
         this.props.getUserProfile(userId)
         this.props.getUserStatus(userId)
-
-
     }
 
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps: Readonly<OwnProps>, prevState: Readonly<{}>, snapshot?: any) {
+        //debugger
+        if(this.props.match.params.userId!== prevProps.match.params.userId) {
+            //debugger
+            this.refreshProfile()
+        }    }
 
     render() {
         //console.log('RENDER PROFILE')
         return <div>
-            <Profile {...this.props} profile={this.props.userProfile}/>
+            <Profile {...this.props}
+                     profile={this.props.userProfile}
+                     isOwner={!this.props.match.params.userId}
+                     savePhoto={this.props.savePhoto}
+            />
 
 
         </div>
@@ -52,6 +64,8 @@ type MapDispatchPropsType = {
     getUserProfile: (userId: number | null) => void
     getUserStatus: (userId: number | null) => void
     updateUserStatus: (newStatus: string) => void
+    savePhoto:(photo:File)=>void
+
 }
 
 
@@ -70,7 +84,8 @@ export default compose<React.ComponentType>(
     connect(mapStateToProps, {
         getUserProfile: getUserProfileTC,
         getUserStatus: getStatusTC,
-        updateUserStatus: updateStatusTC
+        updateUserStatus: updateStatusTC,
+        savePhoto:savePhotoTC
     }),
     WithAuthRedirect,
     withRouter,

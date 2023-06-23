@@ -5,8 +5,8 @@ import {SidebarActionTypes, sidebarReducer} from "./sidebar-reducer";
 import {UsersActionTypes, usersReducer} from "./users-reducer";
 import {AuthActionTypes, authReducer, StopSubmitType} from "./auth-reducer";
 import thunk, {ThunkAction} from "redux-thunk";
-import {reducer as formReducer, stopSubmit} from "redux-form";
-import {AppActionTypes, appReducer, initializedSuccessAC} from "./app-reducer";
+import {reducer as formReducer} from "redux-form";
+import {AppActionTypes, appReducer} from "./app-reducer";
 //import {} from "redux-devtools-extension"
 
 let reducer = combineReducers({

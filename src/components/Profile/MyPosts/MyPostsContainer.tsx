@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React from "react";
 import {addPostActionCreater} from "../../../redux/profile-reducer";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";

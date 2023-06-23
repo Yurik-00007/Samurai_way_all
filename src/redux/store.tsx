@@ -1,7 +1,7 @@
+
 import {AddPostACType, profileReducer, ProfileType} from "./profile-reducer";
 import {AddMessageACType, dialogsReducer} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
-
 type DialogsType = {
     id: number
     name: string
