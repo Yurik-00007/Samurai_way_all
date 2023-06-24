@@ -6,6 +6,7 @@ import {FormDataType} from "./Login";
 import s from '../common/FormControles/FormsControls.module.css'
 
 export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
+
     return (
         <form onSubmit={handleSubmit}>
 

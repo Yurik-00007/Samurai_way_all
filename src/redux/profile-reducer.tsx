@@ -1,7 +1,8 @@
 import {AddMessageACType} from "./dialogs-reducer";
-import {Dispatch} from "redux";
 import {profileAPI, usersAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
+import {ContactsType} from "../components/Profile/ProfileInfo/ProfileInfo";
+import {stopSubmit} from "redux-form";
 
 
 export type PostsType = {
@@ -10,16 +11,6 @@ export type PostsType = {
     likesCount: number
 }
 
-export type ContactsType = {
-    github: string | null
-    vk: string | null
-    facebook: string | null
-    instagram: string | null
-    twitter: string | null
-    website: string | null
-    youtube: string | null
-    mainLink: string | null
-}
 
 export type PhotosType = {
     small: string
@@ -35,14 +26,13 @@ export  type UserProfileType = {
     contacts: ContactsType
     photos: PhotosType
 }
-export  type ProfileType = UserProfileType | null
 export  type StatusType = string
 
 
 //export type _InitialStateType = typeof initialState
 export type InitialStateType = {
     posts: PostsType[]
-    userProfile: UserProfileType | null
+    userProfile: UserProfileType
     status: StatusType
 
 }
@@ -63,12 +53,32 @@ let initialState: InitialStateType = {
         {id: 3, message: 'Blalblat!', likesCount: 15},
         {id: 4, message: 'Dada?', likesCount: 17},
     ],
-    userProfile: null,
+    userProfile: {
+        "aboutMe": "",
+        "contacts": {
+            "facebook": "",
+            "website": '',
+            "vk": "",
+            "twitter": "",
+            "instagram": "",
+            "youtube": '',
+            "github": "",
+            "mainLink": ''
+        },
+        "lookingForAJob": true,
+        "lookingForAJobDescription": "",
+        "fullName": "",
+        "userId": 2,
+        "photos": {
+            "small": "",
+            "large": ""
+        }
+    },
     status: ''
 }
 
 
-export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionTypes):InitialStateType => {
+export const profileReducer = (state: InitialStateType = initialState, action: ProfileActionTypes): InitialStateType => {
 
     switch (action.type) {
         case 'ADD-POST':
@@ -85,7 +95,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
         case "DELETE-POST":
             return {...state, posts: state.posts.filter(p => p.id !== action.payload.postId)}
         case "SAVE-PHOTO":
-            return {...state, userProfile: {...state.userProfile, photos:action.payload.photos} as ProfileType}
+            return {...state, userProfile: {...state.userProfile, photos: action.payload.photos} as UserProfileType}
         default:
             return state;
     }
@@ -97,13 +107,15 @@ export type SetUserProfileACType = ReturnType<typeof setUserProfileAC>
 export type SetStatusACType = ReturnType<typeof setStatus>
 export type DeletePostACType = ReturnType<typeof deletePostAC>
 export type SavePhotoType = ReturnType<typeof savePhotoSuccessAC>
+export type StopSubmitType = ReturnType<typeof stopSubmit>
 //AC
 export const addPostActionCreater = (newPostText: string) => {
     return {
         type: 'ADD-POST',
         payload: {
             newPostText
-    } }as const
+        }
+    } as const
 }
 
 export const setUserProfileAC = (userProfile: UserProfileType) => ({
@@ -181,8 +193,21 @@ export const updateStatusTC = (newStatus: string) => (dispatch: Dispatch) => {
 
 export const savePhotoTC = (photo: File): AppThunk => async dispatch => {
     const res = await profileAPI.savePhoto(photo)
-        //debugger
+    //debugger
     if (res.data.resultCode === 0)
         dispatch(savePhotoSuccessAC(res.data.data.photos))
+}
+export const saveProfileTC = (profile: UserProfileType): AppThunk => async (dispatch, getState) => {
+    const userId = getState().auth.userId as number
+    const res = await profileAPI.saveProfile(profile)
+    //debugger
+    if (res.data.resultCode === 0) {
+        dispatch(getUserProfileTC(userId))
+    } else {
+        let message = res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
+        dispatch(stopSubmit('edit-profile', {_error: message}))
+        //dispatch(stopSubmit('edit-profile', {'contacts':{'facebook': res.data.messages[0]}}))
+    return Promise.reject(message)
+    }
 }
 

@@ -1,5 +1,5 @@
 
-import {AddPostACType, profileReducer, ProfileType} from "./profile-reducer";
+import {AddPostACType, profileReducer, UserProfileType} from "./profile-reducer";
 import {AddMessageACType, dialogsReducer} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 type DialogsType = {
@@ -27,7 +27,7 @@ type PostsType = {
 type PofilePageType = {
     posts: PostsType[],
     //newPostText: string
-    userProfile: ProfileType
+    userProfile: UserProfileType
     status: string
 
 }
@@ -97,13 +97,13 @@ let store: StoreType = {
                 "aboutMe": "",
                 "contacts": {
                     "facebook": "",
-                    "website": null,
+                    "website": '',
                     "vk": "",
                     "twitter": "",
                     "instagram": "",
-                    "youtube": null,
+                    "youtube": '',
                     "github": "",
-                    "mainLink": null
+                    "mainLink": ''
                 },
                 "lookingForAJob": true,
                 "lookingForAJobDescription": "",

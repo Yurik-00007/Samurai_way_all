@@ -1,6 +1,6 @@
 import {
     addPostActionCreater, deletePostAC, InitialStateType,
-    profileReducer
+    profileReducer, UserProfileType
 } from "./profile-reducer";
 
 
@@ -13,7 +13,7 @@ beforeEach(() => {
             {id: 3, message: `Blalblat!`, likesCount: 15},
             {id: 4, message: `Dada?`, likesCount: 17},
         ],
-        userProfile: null,
+        userProfile: {} as UserProfileType,
         status: ''
 
     }

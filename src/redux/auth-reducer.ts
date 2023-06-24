@@ -21,7 +21,7 @@ export const authReducer = (state: InitialState = initialState, action: AuthActi
 }
 
 
-export type AuthActionTypes = SetUserDataACType
+export type AuthActionTypes = SetUserDataACType|StopSubmitType
 export type StopSubmitType = ReturnType<typeof stopSubmit>
 type SetUserDataACType = ReturnType<typeof setAuthUserDataAC>
 
@@ -81,9 +81,8 @@ export const loginTC =
             if (data.resultCode === 0) {
                 dispatch(getAuthUserDataTC())
             } else {
-                let message = data.messages.length > 0 ? data.messages : 'Some error'
+                let message = data.messages.length > 0 ? data.messages[0] : 'Some error'
                 //console.log(stopSubmit('login', {_error: message}))
-
                 dispatch(stopSubmit('login', {_error: message}))
             }
         }

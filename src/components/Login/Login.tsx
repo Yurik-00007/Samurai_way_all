@@ -18,7 +18,7 @@ type LoginType = MapStatePropsType & MapDispatchToPropsType
 const Login: React.FC<LoginType> = (props) => {
     const onSubmitHandler = (formData: FormDataType) => {
         const {email, password, rememberMe} = formData
-        props.login(email, password, rememberMe, stopSubmit)
+        props.login(email, password, rememberMe)
     }
     if (props.isAuth) {
         return <ProfileContainer/>
@@ -34,7 +34,7 @@ const Login: React.FC<LoginType> = (props) => {
 
 
 type MapDispatchToPropsType = {
-    login: (email: string, password: string, rememberMe: boolean, stopSubmit: (form: string, errors?: FormErrors | undefined) => FormAction) => void
+    login: (email: string, password: string, rememberMe: boolean, ) => void
     logout: () => void
 }
 type MapStatePropsType = ReturnType<typeof mapStateToProps>

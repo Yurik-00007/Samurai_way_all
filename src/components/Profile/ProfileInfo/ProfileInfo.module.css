@@ -4,3 +4,13 @@
 .mainPhoto{
     max-width: 200px;
 }
+
+.contacts{
+    padding-left: 10px;
+}
+
+.formSummeryError {
+    border: 2px solid red;
+    padding: 5px;
+    color: #860000;
+}

@@ -1,7 +1,6 @@
 import React, {HTMLInputTypeAttribute} from "react";
 import s from './FormsControls.module.css'
 import {Field, WrappedFieldInputProps, WrappedFieldMetaProps} from "redux-form";
-import {required} from "../../../utils/validators/validators";
 
 
 type FormsControls = {
@@ -16,7 +15,7 @@ const FormControl = ({input, meta: {touched, error}, children}: any) => {
 
     const hasError = touched && error
     return (
-        <div className={s.formControle + ' ' + (hasError ? s.error : '')}>
+        <div className={`s.formControle ${hasError ? s.error : ''}`}>
             <div>
                 {children}
             </div>
