@@ -6,11 +6,11 @@ import {FormDataType} from "./Login";
 import s from '../common/FormControles/FormsControls.module.css'
 import {UserProfileType} from "../../redux/profile-reducer";
 
-type LoginFormType = {
+type LoginFormPropsType = {
     captchaUrl: string|null
 }
 
-type LoginFormPropsType = InjectedFormProps<FormDataType, LoginFormType>
+type LoginFormType = InjectedFormProps<FormDataType, LoginFormPropsType>
 
 
 //export const LoginForm: React.FC<InjectedFormProps<FormDataType, LoginFormType> & LoginFormType> = ({
@@ -70,4 +70,4 @@ export const LoginForm: React.FC<LoginFormPropsType & LoginFormType> = ({captcha
         </form>
     );
 };
-export const LoginReduxForm = reduxForm<FormDataType, LoginFormType>({form: 'login'})(LoginForm)
+export const LoginReduxForm = reduxForm<FormDataType, LoginFormPropsType>({form: 'login'})(LoginForm)

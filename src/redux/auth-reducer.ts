@@ -25,7 +25,6 @@ export const authReducer = (state: InitialState = initialState, action: AuthActi
 
 
 export type AuthActionTypes = SetUserDataType | getCaptchaUrlType
-export type StopSubmitType = ReturnType<typeof stopSubmit>
 type SetUserDataType = ReturnType<typeof setAuthUserDataAC>
 type getCaptchaUrlType = ReturnType<typeof getCaptchaUrlAC>
 

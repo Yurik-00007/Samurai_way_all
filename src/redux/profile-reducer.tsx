@@ -110,7 +110,7 @@ export type SetUserProfileACType = ReturnType<typeof setUserProfileAC>
 export type SetStatusACType = ReturnType<typeof setStatus>
 export type DeletePostACType = ReturnType<typeof deletePostAC>
 export type SavePhotoType = ReturnType<typeof savePhotoSuccessAC>
-export type StopSubmitType = ReturnType<typeof stopSubmit>
+//export type StopSubmitType = ReturnType<typeof stopSubmit>
 //AC
 export const addPostActionCreater = (newPostText: string) => {
     return {

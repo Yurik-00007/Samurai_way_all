@@ -3,9 +3,9 @@ import {ProfileActionTypes, profileReducer} from "./profile-reducer";
 import {DialogsActionTypes, dialogsReducer} from "./dialogs-reducer";
 import {SidebarActionTypes, sidebarReducer} from "./sidebar-reducer";
 import {UsersActionTypes, usersReducer} from "./users-reducer";
-import {AuthActionTypes, authReducer, StopSubmitType} from "./auth-reducer";
+import {AuthActionTypes, authReducer} from "./auth-reducer";
 import thunk, {ThunkAction} from "redux-thunk";
-import {reducer as formReducer} from "redux-form";
+import {reducer as formReducer, stopSubmit} from "redux-form";
 import {AppActionTypes, appReducer} from "./app-reducer";
 //import {} from "redux-devtools-extension"
 
@@ -30,6 +30,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 
 //export let store = createStore(reducer, applyMiddleware(thunk))
+export type StopSubmitType = ReturnType<typeof stopSubmit>
 
 //все типы action для всего app
 export type AppActionsType =
@@ -40,6 +41,7 @@ export type AppActionsType =
     | SidebarActionTypes
     | AppActionTypes
     | StopSubmitType
+
 
 //https://docs.google.com/document/d/1xg6ZLT3z7qswgC5Zj03o_efe-vAc9uUSXyEKfoVCQf4/edit#heading=h.pgm8onpxmgg8
 //типизация thunk
