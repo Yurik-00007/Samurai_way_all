@@ -4,8 +4,17 @@ import {required} from "../../utils/validators/validators";
 import {createField, Input} from "../common/FormControles/FormsControles";
 import {FormDataType} from "./Login";
 import s from '../common/FormControles/FormsControls.module.css'
+import {UserProfileType} from "../../redux/profile-reducer";
 
-export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
+type LoginFormType = {
+    captchaUrl: string|null
+}
+
+type LoginFormPropsType = InjectedFormProps<FormDataType, LoginFormType>
+
+
+//export const LoginForm: React.FC<InjectedFormProps<FormDataType, LoginFormType> & LoginFormType> = ({
+export const LoginForm: React.FC<LoginFormPropsType & LoginFormType> = ({captchaUrl,handleSubmit, error}) => {
 
     return (
         <form onSubmit={handleSubmit}>
@@ -44,6 +53,14 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubm
                     component={Input}/>
             </div>
             */}
+
+            {captchaUrl &&
+                <img src={captchaUrl} alt=""/>
+            }
+            {captchaUrl &&
+            createField("captcha", 'Symbols from image', [required], Input, {type: "text"})
+            }
+
             {error && <div className={s.formSummeryError}>
                 {error}
             </div>}
@@ -53,4 +70,4 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubm
         </form>
     );
 };
-export const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
+export const LoginReduxForm = reduxForm<FormDataType, LoginFormType>({form: 'login'})(LoginForm)

@@ -1,7 +1,6 @@
 import {AddMessageACType} from "./dialogs-reducer";
 import {profileAPI, usersAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
-import {ContactsType} from "../components/Profile/ProfileInfo/ProfileInfo";
 import {stopSubmit} from "redux-form";
 
 
@@ -16,6 +15,10 @@ export type PhotosType = {
     small: string
     large: string
 }
+
+export type ContactsType = {
+    [key: string]: string;
+};
 
 export  type UserProfileType = {
     userId: number

@@ -1,7 +1,7 @@
 import React from 'react';
 import {LoginReduxForm} from "./LoginForm";
 import {connect} from "react-redux";
-import {loginTC, logoutTC} from "../../redux/auth-reducer";
+import {getCaptchaUrlTC, loginTC, logoutTC} from "../../redux/auth-reducer";
 import {AppRootStateType} from "../../redux/redux-store";
 import ProfileContainer from "../Profile/ProfileContainer";
 import {FormAction, FormErrors, stopSubmit} from "redux-form";
@@ -11,14 +11,15 @@ export type FormDataType = {
     email: string
     password: string
     rememberMe: boolean
+    captcha:string|null
 }
 type LoginType = MapStatePropsType & MapDispatchToPropsType
 
 
 const Login: React.FC<LoginType> = (props) => {
     const onSubmitHandler = (formData: FormDataType) => {
-        const {email, password, rememberMe} = formData
-        props.login(email, password, rememberMe)
+        const {email, password, rememberMe, captcha} = formData
+        props.login(email, password, rememberMe, captcha)
     }
     if (props.isAuth) {
         return <ProfileContainer/>
@@ -26,7 +27,7 @@ const Login: React.FC<LoginType> = (props) => {
     return (
         <div>
             <h1>Login</h1>
-            <LoginReduxForm onSubmit={onSubmitHandler}/>
+            <LoginReduxForm onSubmit={onSubmitHandler} captchaUrl={props.captchaUrl}/>
         </div>
     );
 
@@ -34,17 +35,19 @@ const Login: React.FC<LoginType> = (props) => {
 
 
 type MapDispatchToPropsType = {
-    login: (email: string, password: string, rememberMe: boolean, ) => void
+    login: (email: string, password: string, rememberMe: boolean,captcha:string|null ) => void
     logout: () => void
+    getCaptchaUrl:()=>void
 }
 type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
 const mapStateToProps = (state: AppRootStateType) => ({
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    captchaUrl:state.auth.captchaUrl
 })
 
 export default connect(mapStateToProps,
-    {login: loginTC, logout: logoutTC})(Login)
+    {login: loginTC, logout: logoutTC,getCaptchaUrl:getCaptchaUrlTC})(Login)
 
 
 

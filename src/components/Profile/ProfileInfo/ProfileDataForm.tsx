@@ -5,25 +5,26 @@ import {UserProfileType} from "../../../redux/profile-reducer";
 import s from './ProfileInfo.module.css'
 
 
-//type ProfileDataFormType = InjectedFormProps<UserProfileType,{x:number}>
 type ProfileDataFormPropsType = { profile: UserProfileType }
-//type ProfileDataFormType = InjectedFormProps<UserProfileType,{x:number,profile:UserProfileType}>
 type ProfileDataFormType = InjectedFormProps<UserProfileType, ProfileDataFormPropsType>
 
 
-//export const ProfileDataForm: React.FC<ProfileDataFormType &{x:number,profile:UserProfileType}> = (props) => {
-export const ProfileDataForm: React.FC<ProfileDataFormType & ProfileDataFormPropsType> = ({handleSubmit,error,profile}) => {
-//const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, {}, string> & ProfileDataType> = (props ) => {
+export const ProfileDataForm: React.FC<ProfileDataFormType & ProfileDataFormPropsType> = ({
+                                                                                              handleSubmit,
+                                                                                              error,
+                                                                                              profile
+                                                                                          }) => {
 //props.x
     //const {handleSubmit,error,profile}=props
     return (
-        <form onSubmit={(...arg) => handleSubmit(...arg)}>
+        <form onSubmit={handleSubmit}>
             <div>
                 {/*{props.x}*/}
                 <button>Save</button>
-                {error && <div className={s.formSummeryError}>
-                    {error}
-                </div>}
+                {error &&
+                    <div className={s.formSummeryError}>
+                        {error}
+                    </div>}
             </div>
             {/*
             <div><b>UserId</b>: {props.profile.userId}</div>
@@ -54,7 +55,7 @@ export const ProfileDataForm: React.FC<ProfileDataFormType & ProfileDataFormProp
                 {Object.keys(profile.contacts).map((key) => {
                     //debugger
                     return <div className={s.contacts} key={key}>
-                        <b>{key}:</b>{createField('contacts.'+key, key, [], Input,)}
+                        <b>{key}:</b>{createField(`${key}`, `${key}`, [], Input,)}
                     </div>
                 })}
             </div>

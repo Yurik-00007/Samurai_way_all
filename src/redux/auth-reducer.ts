@@ -1,4 +1,4 @@
-import {authMeAPI} from "../api/api";
+import {authMeAPI, securityAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
 import {stopSubmit} from "redux-form";
 
@@ -8,6 +8,7 @@ let initialState = {
     login: null as string | null,
     email: null as string | null,
     isAuth: false as boolean | null,
+    captchaUrl: null as string | null
 }
 type InitialState = typeof initialState
 
@@ -15,15 +16,18 @@ export const authReducer = (state: InitialState = initialState, action: AuthActi
     switch (action.type) {
         case SET_USER_DATA:
             return {...state, ...action.payload}
+        case "GET-CAPTCHA-URL":
+            return {...state, captchaUrl: action.payload.captchaUrl}
         default:
             return state;
     }
 }
 
 
-export type AuthActionTypes = SetUserDataACType|StopSubmitType
+export type AuthActionTypes = SetUserDataType | getCaptchaUrlType
 export type StopSubmitType = ReturnType<typeof stopSubmit>
-type SetUserDataACType = ReturnType<typeof setAuthUserDataAC>
+type SetUserDataType = ReturnType<typeof setAuthUserDataAC>
+type getCaptchaUrlType = ReturnType<typeof getCaptchaUrlAC>
 
 export const setAuthUserDataAC = (userId: number | null, login: string | null, email: string | null, isAuth: boolean) => {
     //debugger
@@ -34,10 +38,20 @@ export const setAuthUserDataAC = (userId: number | null, login: string | null, e
             login,
             email,
             isAuth
+
         }
     } as const
 }
 
+export const getCaptchaUrlAC = (captchaUrl: string | null) => {
+    //debugger
+    return {
+        type: 'GET-CAPTCHA-URL',
+        payload: {
+            captchaUrl
+        }
+    } as const
+}
 //thunk
 //then catch
 /*
@@ -72,15 +86,18 @@ export const getAuthUserDataTC = (): AppThunk => async dispatch => {
 
 export const loginTC =
     //типизациая thunk в thunk
-    (email: string, password: string, rememberMe: boolean): AppThunk =>
+    (email: string, password: string, rememberMe: boolean, captcha:string|null): AppThunk =>
         async dispatch => {
 //Dispatch | ThunkDispatch<EmptyObject & any, unknown, FollowACType>
-            let data = await authMeAPI.login(email, password, rememberMe)
+            let data = await authMeAPI.login(email, password, rememberMe, captcha)
             //console.log(typeof res.data.data.id)
             //debugger
             if (data.resultCode === 0) {
                 dispatch(getAuthUserDataTC())
             } else {
+                if (data.resultCode === 10) {
+                    dispatch(getCaptchaUrlTC())
+                }
                 let message = data.messages.length > 0 ? data.messages[0] : 'Some error'
                 //console.log(stopSubmit('login', {_error: message}))
                 dispatch(stopSubmit('login', {_error: message}))
@@ -107,6 +124,17 @@ export const loginTC =
                 })
         }
 */
+
+export const getCaptchaUrlTC =
+    //типизациая thunk в thunk
+    (): AppThunk =>
+        async dispatch => {
+//Dispatch | ThunkDispatch<EmptyObject & any, unknown, FollowACType>
+            let data = await securityAPI.getCaptcha()
+            const captcha = data.url
+            dispatch(getCaptchaUrlAC(captcha))
+        }
+
 
 export const logoutTC =
     //типизациая thunk в thunk
