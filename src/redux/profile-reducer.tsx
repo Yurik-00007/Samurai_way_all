@@ -180,37 +180,41 @@ export const getStatusTC = (userId: number) => (dispatch: Dispatch) => {
 }
 */
 export const updateStatusTC = (newStatus: string): AppThunk => async dispatch => {
-    const res = await profileAPI.updateStatus(newStatus)
-    if (res.data.resultCode === 0)
-        dispatch(setStatus(newStatus))
-}
-/*
-export const updateStatusTC = (newStatus: string) => (dispatch: Dispatch) => {
-    profileAPI.updateStatus(newStatus)
-        .then(res => {
-            if (res.data.resultCode === 0)
-                dispatch(setStatus(newStatus))
-        });
-}
-*/
-
-export const savePhotoTC = (photo: File): AppThunk => async dispatch => {
-    const res = await profileAPI.savePhoto(photo)
-    //debugger
-    if (res.data.resultCode === 0)
-        dispatch(savePhotoSuccessAC(res.data.data.photos))
-}
-export const saveProfileTC = (profile: UserProfileType): AppThunk => async (dispatch, getState) => {
-    const userId = getState().auth.userId as number
-    const res = await profileAPI.saveProfile(profile)
-    //debugger
-    if (res.data.resultCode === 0) {
-        dispatch(getUserProfileTC(userId))
-    } else {
-        let message = res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
-        dispatch(stopSubmit('edit-profile', {_error: message}))
-        //dispatch(stopSubmit('edit-profile', {'contacts':{'facebook': res.data.messages[0]}}))
-    return Promise.reject(message)
+    try {
+        const res = await profileAPI.updateStatus(newStatus)
+        if (res.data.resultCode === 0)
+            dispatch(setStatus(newStatus))
+    } catch (e) {
+        //alert(e)
     }
 }
+    /*
+    export const updateStatusTC = (newStatus: string) => (dispatch: Dispatch) => {
+        profileAPI.updateStatus(newStatus)
+            .then(res => {
+                if (res.data.resultCode === 0)
+                    dispatch(setStatus(newStatus))
+            });
+    }
+    */
+
+    export const savePhotoTC = (photo: File): AppThunk => async dispatch => {
+        const res = await profileAPI.savePhoto(photo)
+        //debugger
+        if (res.data.resultCode === 0)
+            dispatch(savePhotoSuccessAC(res.data.data.photos))
+    }
+    export const saveProfileTC = (profile: UserProfileType): AppThunk => async (dispatch, getState) => {
+        const userId = getState().auth.userId as number
+        const res = await profileAPI.saveProfile(profile)
+        //debugger
+        if (res.data.resultCode === 0) {
+            dispatch(getUserProfileTC(userId))
+        } else {
+            let message = res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
+            dispatch(stopSubmit('edit-profile', {_error: message}))
+            //dispatch(stopSubmit('edit-profile', {'contacts':{'facebook': res.data.messages[0]}}))
+            return Promise.reject(message)
+        }
+    }
 

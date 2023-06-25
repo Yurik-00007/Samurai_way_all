@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import s from "./Paginator.module.css";
+import cn from 'classnames'
 
 type PropsType = {
     totalItemsCount: number
@@ -40,6 +41,7 @@ const Paginator = ({totalItemsCount, pageSize, onPageChanged, currentPage, porti
                     return (
                         <span
                             className={`${s.pageNumber} ${currentPage === p ? s.selectedPage : ''}`}
+                            // className={cn ({[s.selectedPage]: currentPage === p}, s.pageNumber) }
                             key={p}
                             onClick={() => onPageChanged(p)
                             }
