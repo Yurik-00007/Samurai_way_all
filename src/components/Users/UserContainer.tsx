@@ -19,6 +19,7 @@ import {
     getTotalUsersCount,
     getUsersSelector
 } from "../../redux/users-selectors";
+import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 
 type UsersClassType = UsersPropsType
 
@@ -93,7 +94,7 @@ const UsersContainer = compose<React.ComponentType>(
             followTC,
         }
     ),
-    //WithAuthRedirect,
+    WithAuthRedirect,
 )
 (UsersAPIContainer)
 export default UsersContainer

@@ -1,7 +1,10 @@
 .nav {
     grid-area: n;
-    background-color: #DEB889;
+    height: 100vh;
+    background-color: #FFFFFF;
     padding: 20px;
+
+
 }
 
 .nav a {
@@ -11,15 +14,29 @@
 
 .item {
     text-decoration: none;
+    margin: 15px;
     color: green;
     font-size: 20px;
+    font-weight: 400;
+    position: relative;
+    text-transform: capitalize;
+    vertical-align: top;
+    color: #5f6379;
 }
 
 .item a {
-    color: white;
+    color: #757a95;
+}
 
+.item a:hover {
+    color: #fd7e14;
+    border: 1px solid #757a95;
+    border-radius: 10px;
+    padding: 5px 15px;
 }
 
 .item a.activeLink {
-    color: goldenrod;
+    color: #fd7e14;
+    font-weight: 700;
+
 }

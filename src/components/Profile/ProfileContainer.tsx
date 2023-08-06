@@ -12,7 +12,7 @@ import {RouteComponentProps, withRouter} from "react-router-dom";
 import {WithAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import {getStatusData, getUserIdData, getUserProfileData} from "../../redux/profile-selectors";
-
+import s from './Profile.module.css'
 
 class ProfileContainer extends React.Component<OwnProps> {
 
@@ -41,7 +41,8 @@ class ProfileContainer extends React.Component<OwnProps> {
 
     render() {
         //console.log('RENDER PROFILE')
-        return <div>
+        return <div className={s.profileBlock}>
+            <img className={s.pic} src="https://pibig.info/uploads/posts/2022-12/thumbs/1670289983_48-pibig-info-p-gori-sneg-pinterest-69.jpg" alt="profileImg"/>
             <Profile {...this.props}
                      profile={this.props.userProfile}
                      isOwner={!this.props.match.params.userId}

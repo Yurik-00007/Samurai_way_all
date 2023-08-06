@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.module.css';
 import ReactDOM from "react-dom";
 import SamuraiJSApp from "./App";
 

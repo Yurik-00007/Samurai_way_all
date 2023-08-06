@@ -1,2 +1,10 @@
+.profileBlock{
+    width: 100vh;
+}
 
+.pic{
+    width: 150vh; /* Устанавливаем фиксированную ширину */
+    height: 20vh; /* Устанавливаем фиксированную высоту */
+    object-fit: cover;
+}
 

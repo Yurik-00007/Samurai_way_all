@@ -1,7 +1,7 @@
 import React from "react";
 import s from './Navbar.module.css'
 import {NavLink} from "react-router-dom";
-import {Friends} from "../Sidebar/Friends";
+import {useSelector} from "react-redux";
 
 type NavbarType = {}
 
@@ -20,21 +20,18 @@ export const Navbar = (props: NavbarType) => {
             <NavLink to={'/users'} activeClassName={s.activeLink}>Users</NavLink>
         </div>
         <div className={s.item}>
-            <NavLink to={'/news'} activeClassName={s.activeLink}>News</NavLink>
+            <NavLink to={'/photos'} activeClassName={s.activeLink}>Photos</NavLink>
         </div>
         <div className={s.item}>
             <NavLink to={'/music'} activeClassName={s.activeLink}>Music</NavLink>
         </div>
         <div className={s.item}>
             <NavLink to={'/settings'} activeClassName={s.activeLink}>Settings</NavLink>
-            {/*
-            <NavLink to={'/settings'} className={navData => navData.isActive ? s.active : s.item}>Settings</NavLink>
-*/}
         </div>
 
+{/*
         <div className={s.item}>
-            <Friends
-
-            /></div>
+            <Friends/></div>
+*/}
     </nav>
 }

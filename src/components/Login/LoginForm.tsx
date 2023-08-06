@@ -23,36 +23,6 @@ export const LoginForm: React.FC<LoginFormPropsType & LoginFormType> = ({captcha
             {createField("password", 'Password', [required], Input, {type: "password"})}
             {createField('remember me', '', null, Input, {type: "checkbox"}, 'remember me')}
 
-            {/*
-                <div>
-                           <Field
-                    type="text"
-                    name={"email"}
-                    placeholder={'Email'}
-                    validate={[required]}
-                    component={Input}/>
-                </div>
-
-
-
-
-            <div>
-                <Field
-                    type="password"
-                    name={"password"}
-                    placeholder={'Password'}
-                    validate={[required]}
-                    component={Input}/>
-            </div>
-
-
-            <div>remember me
-                <Field
-                    type="checkbox"
-                    name={"rememberMe"}
-                    component={Input}/>
-            </div>
-            */}
 
             {captchaUrl &&
                 <img src={captchaUrl} alt=""/>

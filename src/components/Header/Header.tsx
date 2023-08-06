@@ -9,7 +9,7 @@ export const Header = (props: HeaderPropsType) => {
     }
     return <header className={s.header}>
         <img alt={'pic'}
-             src={'https://media.istockphoto.com/vectors/adoption-and-community-care-vector-id1286680331?k=20&m=1286680331&s=612x612&w=0&h=N7cQExSqTTo-Jd30iyOe0IrCCpbeyCRBuxUHL1j13qs='}/>
+             src={'https://avatars.mds.yandex.net/i?id=59aefb66080318221dc1ad0411b31e4f869927eb-8210406-images-thumbs&n=13'}/>
         <div className={s.loginBlock}>
             {
                 props.isAuth

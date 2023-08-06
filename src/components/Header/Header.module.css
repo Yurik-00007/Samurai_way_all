@@ -3,11 +3,13 @@
 }
 
 .header {
-    grid-area: h;
-    background-color: #30B56C;
+
+  grid-area: h;
+    background-color: #495B72;
 }
 
 .loginBlock {
+    padding: 20px 30px;
     float: right;
     color: #ffffff;
 }

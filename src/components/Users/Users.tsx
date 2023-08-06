@@ -2,6 +2,7 @@ import React from 'react';
 import {UserType} from "../../redux/users-reducer";
 import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
+import s from './users.module.css'
 
 type PropsType = {
     totalUsersCount: number
@@ -18,14 +19,14 @@ type PropsType = {
 
 const Users = ({totalUsersCount, pageSize, currentPage, onPageChanged, portionSize, ...props}: PropsType) => {
     return (
-        <div>
+        <div >
             <Paginator
                 totalItemsCount={totalUsersCount}
                 pageSize={pageSize}
                 currentPage={currentPage}
                 onPageChanged={onPageChanged}
                 portionSize={portionSize}
-            />
+            /> <div className={s.container}>
             {props.users.map(u => <User
                     key={u.id}
                     user={u}
@@ -34,6 +35,7 @@ const Users = ({totalUsersCount, pageSize, currentPage, onPageChanged, portionSi
                     unFollowTC={props.unFollowTC}
                 />
             )}
+        </div>
         </div>
     )
 }

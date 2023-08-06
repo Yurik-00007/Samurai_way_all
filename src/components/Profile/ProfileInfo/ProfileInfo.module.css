@@ -2,7 +2,9 @@
     padding: 10px;
 }
 .mainPhoto{
+    margin-top: -170px;
     max-width: 200px;
+    border-radius: 50%;
 }
 
 .contacts{
